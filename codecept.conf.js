@@ -12,7 +12,7 @@ exports.config = {
     I: './src/steps_file.js',
     loginPage: './src/pages/official/loginPage.js',
     dashboardPage: './src/pages/official/dashboardPage.js',
-    officialLeftSide: './src/fragments/official/leftSide.js',
+    officialLeftSide: './src/fragments/official/sidePanel.js',
   },
   bootstrap: null,
   mocha: {},
