@@ -2,6 +2,7 @@ Feature('My First Test');
 
 Scenario('login', (I, loginPage) => {
   I.amOnPage("https://shimo.im/login")
-  loginPage.sendForm('autotest1@shimo.im','123456')
-  I.see('Hello, John')
+  loginPage.waitForPageToLoad()
+  loginPage.signIn('autotest1@shimo.im','123456')
+  dashboardPage.waitForPageToLoad()
 });

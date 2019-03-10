@@ -3,8 +3,8 @@ const I = actor()
 module.exports = {
   main: {
     title: { xpath: './/div[@class="title"]' },
-    account: 'input[placeholder="手机号或邮箱"]',
-    password: 'input[placeholder="密码"]',
+    account: {css: 'input[placeholder="手机号或邮箱"]'},
+    password: {css:'input[placeholder="密码"]'},
     submitButton: { xpath: './/button[text()="立即登录" or text()="登录"]' }
   },
 
@@ -15,7 +15,7 @@ module.exports = {
     submitButton: { xpath: './/a[text()="登录"]' }
   },
 
-  waitForPageToLoad() {
+  waitForPageToLoad: ()=>{
     I.waitForVisible(this.main.account)
   },
 

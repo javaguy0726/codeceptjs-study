@@ -5,14 +5,19 @@ exports.config = {
     WebDriver: {
       url: 'http://localhost',
       browser: 'chrome',
-      waitForTimeout: 20000
+      waitForTimeout: 20000,
+      windowSize: "maximize",
+    }, 
+    WdHelper: {
+      "require": "./src/helpers/wd_helper.js"
     }
   },
   include: {
     I: './src/steps_file.js',
     loginPage: './src/pages/official/loginPage.js',
     dashboardPage: './src/pages/official/dashboardPage.js',
-    officialLeftSide: './src/fragments/official/sidePanel.js',
+    desktopPage: './src/pages/official/desktopPage.js',
+    officialSidePanel: './src/fragments/official/sidePanel.js',
   },
   bootstrap: null,
   mocha: {},

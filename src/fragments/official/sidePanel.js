@@ -1,7 +1,7 @@
 const I = actor();
 
 /**
- * 官网 - 桌面左右边公共部分
+ * 主站 - 桌面左右边公共部分
  * 
  */
 module.exports = {
@@ -14,14 +14,36 @@ module.exports = {
     trash: {xpath: ".//a[text()='回收站'][@class]"},
     
     coSpace:{
+      root: {xpath: ".//div[./div/span[text()='协作空间']]"},
 
     }
   },
 
   rightPanel: {
-    css: '.right_panel',
-    
+    root: {css: '.right_panel'},
+    newFile:{
+      buttonNew: {xpath: ".//div[starts-with(@class,'right_panel')]//button[text()='新建']"},
+      options: {css: ".sm-menu-vertical-left"},
+      newDoc: {xpath: ".//ul[contains(@class,'sm-menu-vertical-left')]//span[text()='文档']"},
+      newSheet: {xpath: ".//ul[contains(@class,'sm-menu-vertical-left')]//span[text()='表格']"},
+      newForm: {xpath: ".//ul[contains(@class,'sm-menu-vertical-left')]//span[text()='表单']"},
+
+    } ,
+    import:{},
+
+    shortcut:{
+      root: {xpath: ".//div[text()='快捷方式']/.."},
+      shortcutList:{id: "right-sidebar-shortcuts"},
+    },
   },
+
+
+
+
+
+
+
+
 
 
 }
