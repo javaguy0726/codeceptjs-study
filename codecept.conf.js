@@ -17,7 +17,12 @@ exports.config = {
     loginPage: './src/pages/official/loginPage.js',
     dashboardPage: './src/pages/official/dashboardPage.js',
     desktopPage: './src/pages/official/desktopPage.js',
+
+
+
     officialSidePanel: './src/fragments/official/sidePanel.js',
+    officialHeader: './src/fragments/official/header.js',
+    officialPopup: './src/fragments/official/popup.js',
   },
   bootstrap: null,
   mocha: {},

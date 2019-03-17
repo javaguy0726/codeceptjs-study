@@ -12,13 +12,12 @@ module.exports = {
   },
 
   waitForPageToLoad() {
-    I.waitForVisible(locator(this.main.fileList).find(".//*[@draggable='true']"))
+    I.waitForVisible(locate(this.main.fileList).find(".//*[@draggable='true']"))
     I.waitForVisible(this.header.list)
 
     if(I.elementWaitDisplayed(popupFragment.adPay.payButton,3)){
       I.pressKey('ESC')
       I.waitForInvisible(popupFragment.adPay.payButton)
     }
-
   }
 }

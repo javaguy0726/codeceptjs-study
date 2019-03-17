@@ -15,7 +15,7 @@ module.exports = {
     submitButton: { xpath: './/a[text()="登录"]' }
   },
 
-  waitForPageToLoad: ()=>{
+  waitForPageToLoad(){
     I.waitForVisible(this.main.account)
   },
 
@@ -25,7 +25,7 @@ module.exports = {
    * @param {*} account
    * @param {*} password
    */
-  signIn: (account, password) => {
+  signIn(account, password) {
     I.fillField(this.main.account, account)
     I.fillField(this.main.password, password)
     I.click(this.main.submitButton)
@@ -37,7 +37,7 @@ module.exports = {
    * @param {*} account
    * @param {*} password
    */
-  mSignIn: (account, password) => {
+  mSignIn(account, password) {
     I.fillField(this.m_main.account, account)
     I.fillField(this.m_main.password, password)
     I.click(this.m_main.submitButton)

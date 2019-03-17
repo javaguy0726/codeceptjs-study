@@ -12,8 +12,10 @@ class WdHelper extends Helper {
   }
 
   async elementDisplayed(locator){
-    const browser = this.helpers['WebDriver'].browser
-    return await browser.$(locator).isDisplayed()
+    const browser = await this.helpers['WebDriver'].browser
+    const ele = await browser.$(locator)
+    console.log(ele.isDisplayed())
+    return ele.isDisplayed()
   }
 
 }

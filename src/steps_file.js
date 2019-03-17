@@ -2,10 +2,8 @@
 
 module.exports = function() {
   return actor({
-    /**
-     * 等待指定时间判断元素是否显示
-     */
-    elementWaitDisplayed: (locator, sec) => {
+    
+    elementWaitDisplayed: function(locator, sec) {
       try {
         this.waitUntil(
           () => {

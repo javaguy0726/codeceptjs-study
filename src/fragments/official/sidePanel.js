@@ -1,4 +1,5 @@
 const I = actor();
+const desktopPage = require('../../pages/official/desktopPage'); 
 
 /**
  * 主站 - 桌面左右边公共部分
@@ -37,7 +38,10 @@ module.exports = {
     },
   },
 
-
+  myDesktop(){
+    I.click(this.leftPanel.desktop)
+    desktopPage.waitForPageToLoad()
+  }
 
 
 
