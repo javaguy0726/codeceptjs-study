@@ -1,5 +1,6 @@
 const popupFragment = require('../../fragments/official/popup');
-const I = actor()
+const codecept = require('codeceptjs')
+const I = codecept.actor()
 
 module.exports = {
   header: {
@@ -15,9 +16,12 @@ module.exports = {
     I.waitForVisible(locate(this.main.fileList).find(".//*[@draggable='true']"))
     I.waitForVisible(this.header.list)
 
-    if(I.elementWaitDisplayed(popupFragment.adPay.payButton,3)){
-      I.pressKey('ESC')
-      I.waitForInvisible(popupFragment.adPay.payButton)
-    }
+    console.log(codecept.config())
+    
+    // if(I.elementWaitDisplayed(popupFragment.adPay.payButton,3)){
+    //   console.log("+++++++")
+    //   I.pressKey('ESC')
+    //   I.waitForInvisible(popupFragment.adPay.payButton)
+    // }
   }
 }
