@@ -15,11 +15,16 @@ class WdHelper extends Helper {
 
   async waitDisplayed(locator, sec) {
     const browser = await this.helpers['WebDriver'].browser
-    browser.waitUntil(async () => {
-      const ele = await browser.$(Object.values(locator)[0])
-      return ele.isDisplayed()
-    }, sec*1000, '等待超时,元素没有显示');
-
+    const rtn = true
+    try{
+      await browser.waitUntil(async () => {
+        const ele = await browser.$(Object.values(locator)[0])
+        return  ele.isDisplayed()
+      }, sec*1000, '等待超时,元素没有显示');
+    }catch(err){
+      rtn = false
+    }
+    return rtn
   }
 
 }
