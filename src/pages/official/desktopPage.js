@@ -1,6 +1,6 @@
 const popupFragment = require('../../fragments/official/popup');
-const codecept = require('codeceptjs')
-const I = codecept.actor()
+const customSteps = require('../../custom_steps')
+const I = actor(customSteps())
 
 module.exports = {
   header: {
@@ -9,19 +9,15 @@ module.exports = {
     updateTime: {}
   },
   main: {
-    fileList: {xpath: ".//div[@class='ReactVirtualized__Grid__innerScrollContainer']"}
+    fileList: { xpath: ".//div[@class='ReactVirtualized__Grid__innerScrollContainer']" }
   },
 
   waitForPageToLoad() {
     I.waitForVisible(locate(this.main.fileList).find(".//*[@draggable='true']"))
     I.waitForVisible(this.header.list)
-
-    console.log(codecept.config())
-    
-    // if(I.elementWaitDisplayed(popupFragment.adPay.payButton,3)){
-    //   console.log("+++++++")
-    //   I.pressKey('ESC')
-    //   I.waitForInvisible(popupFragment.adPay.payButton)
-    // }
+    I.waitDisplayed(popupFragment.adPay.payButton, 5)
+    I.pressKey('Escape')
+    I.wait(5)
+    I.waitForInvisible(popupFragment.adPay.payButton)
   }
 }

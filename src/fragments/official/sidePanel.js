@@ -1,5 +1,5 @@
-const I = actor();
 const desktopPage = require('../../pages/official/desktopPage'); 
+const I = actor();
 
 /**
  * 主站 - 桌面左右边公共部分

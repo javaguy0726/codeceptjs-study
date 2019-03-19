@@ -1,21 +1,25 @@
-class WdHelper extends Helper {
-  _before() {}
+let Helper = codecept_helper
 
-  _after() {}
+class WdHelper extends Helper {
+  _before() { }
+
+  _after() { }
 
   async findElements(strictLocator) {
     return await this.helpers['WebDriver']._locate(strictLocator)
   }
 
-  async findSubElements(fatherLocator, childLocator){
+  async findSubElements(fatherLocator, childLocator) {
     return await this.helpers['WebDriver']._locate(fatherLocator).then(_locate(childLocator))
   }
 
-  async elementDisplayed(locator){
+  async waitDisplayed(locator, sec) {
     const browser = await this.helpers['WebDriver'].browser
-    const ele = await browser.$(locator)
-    console.log(ele.isDisplayed())
-    return ele.isDisplayed()
+    browser.waitUntil(async () => {
+      const ele = await browser.$(Object.values(locator)[0])
+      return ele.isDisplayed()
+    }, sec*1000, '等待超时,元素没有显示');
+
   }
 
 }
