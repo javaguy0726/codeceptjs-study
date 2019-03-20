@@ -20,9 +20,9 @@ exports.config = {
     
     
     
-    officialSidePanel: './src/fragments/official/sidePanel.js',
-    officialHeader: './src/fragments/official/header.js',
-    officialPopup: './src/fragments/official/popup.js',
+    officialSidePanel: './src/pages/official/fragments/sidePanel.js',
+    officialHeader: './src/pages/official/fragments/header.js',
+    officialPopup: './src/pages/official/fragments/popup.js',
   },
   bootstrap: null,
   mocha: {},

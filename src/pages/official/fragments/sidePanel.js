@@ -1,4 +1,3 @@
-const desktopPage = require('../../pages/official/desktopPage'); 
 const I = actor();
 
 /**
@@ -38,9 +37,11 @@ module.exports = {
     },
   },
 
+  /**
+   * 我的桌面
+   */
   myDesktop(){
     I.click(this.leftPanel.desktop)
-    desktopPage.waitForPageToLoad()
   }
 
 

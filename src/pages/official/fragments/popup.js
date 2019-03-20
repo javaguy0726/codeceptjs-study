@@ -7,7 +7,7 @@ const I = actor();
 module.exports = {
 
   adPay: {
-    payButton: { xpath: "//button[text()='支付']"},
+    payButton: { xpath: ".//button[text()='支付']"},
   },
 
 
