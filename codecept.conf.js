@@ -14,15 +14,10 @@ exports.config = {
   },
   include: {
     I: './src/custom_steps.js',
-    loginPage: './src/pages/official/loginPage.js',
-    dashboardPage: './src/pages/official/dashboardPage.js',
-    desktopPage: './src/pages/official/desktopPage.js',
+    officalPages: './src/pages/official',
     
+    officialFragments: './src/fragments/official',
     
-    
-    officialSidePanel: './src/pages/official/fragments/sidePanel.js',
-    officialHeader: './src/pages/official/fragments/header.js',
-    officialPopup: './src/pages/official/fragments/popup.js',
   },
   bootstrap: null,
   mocha: {},

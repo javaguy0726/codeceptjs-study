@@ -1,15 +1,15 @@
 Feature('My First Test')
 
-Scenario('login', async (I, loginPage, dashboardPage, officialSidePanel, desktopPage) => {
+Scenario('login', async (I, officalPages, officialFragments) => {
   I.amOnPage('https://shimo.im/login')
   
-  loginPage.waitForPageToLoad()
-  loginPage.signIn('autotest1@shimo.im', '123456')
+  officalPages.loginPage.waitForPageToLoad()
+  officalPages.loginPage.signIn('autotest1@shimo.im', '123456')
   
-  dashboardPage.waitForPageToLoad()
+  officalPages.dashboardPage.waitForPageToLoad()
   
-  officialSidePanel.myDesktop()
+  officialFragments.sidePanel.myDesktop()
   
-  await desktopPage.waitForPageToLoad()
+  await officalPages.desktopPage.waitForPageToLoad()
 
 })  

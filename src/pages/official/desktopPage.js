@@ -1,4 +1,4 @@
-const popupFragment = require('./fragments/popup')
+const popupFragment = require('../../fragments/official/popup')
 const customSteps = require('../../custom_steps')
 const I = actor(customSteps())
 
