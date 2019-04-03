@@ -1,6 +1,11 @@
-Feature('My First Test')
+/**
+ *  Reference: https://shimo.im/sheet/eWfmuFibciI9EJkl/eLoOW
+ * 
+ */
 
-Scenario('login', async (I, officalPages, officialFragments) => {
+Feature('字符串存储的数字')
+
+Scenario('row2', async (I, officalPages, officialFragments) => {
   I.amOnPage('https://shimo.im/login')
   
   officalPages.loginPage.waitForPageToLoad()
@@ -8,8 +13,6 @@ Scenario('login', async (I, officalPages, officialFragments) => {
   
   officalPages.dashboardPage.waitForPageToLoad()
   
-  officialFragments.sidePanel.myDesktop()
   
-  await officalPages.desktopPage.waitForPageToLoad()
 
 })  

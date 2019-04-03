@@ -1,16 +1,51 @@
 const I = actor()
 
 module.exports = {
-  root: {id: '#root'},
-  main: {
+  root: { id: '#root' },
+  header: {
     title: { xpath: './/div[@class="title"]' },
-    account: {css: 'input[placeholder="手机号或邮箱"]'},
-    password: {css:'input[placeholder="密码"]'},
+    account: { css: 'input[placeholder="手机号或邮箱"]' },
+    password: { css: 'input[placeholder="密码"]' },
     submitButton: { xpath: './/button[text()="立即登录" or text()="登录"]' }
   },
 
+  menu: {
 
-  waitForPageToLoad(){
+  },
+
+  toolbar: {
+    switchBtn:{xpath:".//div[@class='toolBarSwitch ']"},
+    switchBtnOpen:{xpath:".//div[@class='toolBarSwitch toolBarSwitch__open']"},
+
+  },
+
+  fx: {
+    label: { css: '.fx-left-label' },
+
+  },
+
+  sheet: {
+    canvas: { css: '#sm-canvas-container-viewport' },
+
+  },
+
+  sheetTab: {
+
+  },
+
+  dialog:{
+    confirm:{
+      root: {css: '.confirm-dialog'},
+      
+
+    },
+
+  },
+
+
+
+
+  waitForPageToLoad() {
     I.waitForVisible(this.main.account)
   },
 
