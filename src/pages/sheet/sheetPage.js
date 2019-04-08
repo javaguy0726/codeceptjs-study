@@ -167,8 +167,44 @@ module.exports = {
     searchReplace: {
       button: { css: ".icon--find_replace" },
       container: {
-        root: { css: ".cell-link-container" },
+        root: { css: ".search-replace-container" },
+        searchBtn: { xpath: ".//div[contains(@class,'search-container')]//div[text()='查找']" },
+        notFoundText: { xpath: ".//div[text()='未找到']" },
+        searchField: { xpath: ".//input[@placeholder='在工作表中搜索']" },
+        searchResult: { css: ".matches-navigator>.text" },
+        pre: { css: ".matches-navigator>.icon-prev" },
+        next: { css: ".matches-navigator>.icon-next" },
+        replaceField: { css: ".replace-container input" },
+        replaceLabel: { xpath: ".//div[contains(@class,'replace-container')]//div[text()='替换为']" },
+        beginSearch: { xpath: ".//div[contains(@class,'search-replace-actions')]/div[text()='开始查找']" },
+        beginReplace: { xpath: ".//div[contains(@class,'search-replace-actions')]/div[text()='替换']" },
+        beginReplaceAll: { xpath: ".//div[contains(@class,'search-replace-actions')]/div[text()='全部替换']" },
+        close: { css: ".close-button" },
       }
+    },
+
+    //评论
+    comment: {
+      button: { css: ".icon--comment" },
+    },
+
+    //图片
+    image: {
+      button: { css: ".icon--img_float" },
+      dropdown:{
+        root: { css: "[data-tooltip='上传图片'] + .menu--body" },
+      
+      }
+    },
+
+    //格式
+    format: {
+      button: { css: ".toolBar--formatter" },
+      downArrow: { css: ".toolBar--formatter + .toolBar--arrow" },
+      toolTip: { css: ".toolBar--formatter ~ .tooltip__down" },
+      dropdown: {
+        root: { xpath: ".//span[./span[@class='toolBar--formatter']]/following-sibling::div[@class='menu--body']" },
+      },
     },
 
   },
@@ -181,12 +217,14 @@ module.exports = {
   sheet: {
     canvas: { css: '#sm-canvas-container-viewport' },
 
+    //滚动条
     scrollBar: {
       horizontal: { css: "#sm-sheet-scroll-container-h .sm-sheet-scroll-bar" },
       vertical: { css: "#sm-sheet-scroll-container-v .sm-sheet-scroll-bar" },
       numTip: { css: ".sm-sheet-spread-toolTip" },
     },
 
+    //右键菜单
     contextMenu: {
       root: { xpath: ".//ul[@class='spread-contextmenu-list'][./li]" },
       copy: { xpath: ".//ul[@class='spread-contextmenu-list']//li[text()='复制']" },
@@ -197,6 +235,16 @@ module.exports = {
       validation: { xpath: ".//ul[@class='spread-contextmenu-list']//span[text()='数据验证']" },
     },
 
+    //行
+    row:{
+      heightNum: { xpath: ".//body/div[last() and starts-with(text(),'高度')]" },
+      expandBtn: { css: ".expand-row-col-floating-object-row" },
+    },
+//列
+    col:{
+      widthNum: { xpath: ".//body/div[last() and starts-with(text(),'宽度')]" },
+      expandBtn: { css: ".expand-row-col-floating-object-col" },
+    },
 
   },
 
@@ -208,7 +256,8 @@ module.exports = {
     root: { css: '.confirm-dialog' },
     title: {
       uploadImg: { xpath: ".//div[contains(@class,'confirm-dialog ')]//span[text()='上传图片']" },
-      merge: { xpath: ".//div[./div[contains(text(),'确定合并吗')]]" }
+      merge: { xpath: ".//div[./div[contains(text(),'确定合并吗')]]" },
+      replaceAll: { xpath: "" },
     },
     button: {
       confirm: { xpath: ".//div[contains(@class,'confirm-dialog ')]//button[text()='确认']" },
