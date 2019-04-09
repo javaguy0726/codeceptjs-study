@@ -5,7 +5,7 @@
 
 Feature('字符串存储的数字')
 
-Scenario('row2', async (I, officalPages, officialFragments) => {
+Scenario('row2', async (I, officalPages, sheetPages) => {
   I.amOnPage('https://shimo.im/login')
   
   officalPages.loginPage.waitForPageToLoad()
@@ -13,6 +13,7 @@ Scenario('row2', async (I, officalPages, officialFragments) => {
   
   officalPages.dashboardPage.waitForPageToLoad()
   
-  
+  I.amOnPage('https://shimo.im/sheet/WlQHGfFxpgEQGxn5/X9jjY?test=true')
+  sheetPages.sheetPage.waitForPageToLoad()
 
 })  

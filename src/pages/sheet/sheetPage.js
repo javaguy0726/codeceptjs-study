@@ -334,13 +334,13 @@ module.exports = {
 
 
   async waitForPageToLoad() {
-    I.waitForVisible(locate(this.main.fileList).find(".//*[@draggable='true']"))
-    I.waitForVisible(this.header.list)
+    I.waitForFunction(() => typeof window.postMessage === "function" && typeof sheetApi === "object", 20)
 
     if (await I.waitDisplayed(this.modalContent.anonymousEdit.edit, 1) === true) {
       I.click(this.modalContent.anonymousEdit.edit)
       I.waitForInvisible(this.modalContent.anonymousEdit.edit)
     }
+
   },
 
 
