@@ -35,6 +35,7 @@ module.exports = {
 
   },
 
+  //菜单栏
   menu: {
 
   },
@@ -191,10 +192,20 @@ module.exports = {
     //图片
     image: {
       button: { css: ".icon--img_float" },
-      dropdown:{
+      dropdown: {
         root: { css: "[data-tooltip='上传图片'] + .menu--body" },
-      
+
       }
+    },
+
+    //撤销
+    undo: {
+      button: { css: ".icon--undo" },
+    },
+
+    //重做
+    redo: {
+      button: { css: ".icon--redo" },
     },
 
     //格式
@@ -214,6 +225,8 @@ module.exports = {
 
   },
 
+
+  //表格主体部分
   sheet: {
     canvas: { css: '#sm-canvas-container-viewport' },
 
@@ -236,22 +249,39 @@ module.exports = {
     },
 
     //行
-    row:{
+    row: {
       heightNum: { xpath: ".//body/div[last() and starts-with(text(),'高度')]" },
       expandBtn: { css: ".expand-row-col-floating-object-row" },
     },
-//列
-    col:{
+
+    //列
+    col: {
       widthNum: { xpath: ".//body/div[last() and starts-with(text(),'宽度')]" },
       expandBtn: { css: ".expand-row-col-floating-object-col" },
     },
 
   },
 
+  //sheet操作栏
   sheetTab: {
+
+    canvas: { css: "#null_tabStrip" },
+    addBlankBtn: { css: "" },
+    listSheetBtn: { css: "" },
+    listWrap: {
+      root: { css: '.sheet-tab-list-wrap' },
+
+    },
+
+    context: {
+      dropdown: { xpath: ".//ul[contains(@class,'spread-contextmenu-list')][./li]" },
+
+    },
+
 
   },
 
+  //确认框
   confirmDialog: {
     root: { css: '.confirm-dialog' },
     title: {
@@ -267,8 +297,9 @@ module.exports = {
 
   },
 
+  //模块框
   modalContent: {
-    //匿名编辑窗口
+    //匿名编辑
     anonymousEdit: {
       body: { css: '.sm-modal-body' },
       edit: { xpath: ".//div[text()='匿名编辑']" },
@@ -279,6 +310,7 @@ module.exports = {
 
   },
 
+  //提示条
   tips: {
     failDelLastSheet: { xpath: ".//span[text()='无法删除最后一个工作表']" },
     sheetNameExist: { xpath: ".//p[text()='工作表名称已经存在!']" },
