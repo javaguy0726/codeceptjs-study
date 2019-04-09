@@ -333,31 +333,15 @@ module.exports = {
   },
 
 
-  waitForPageToLoad() {
-    I.waitForVisible(this.main.account)
+  async waitForPageToLoad() {
+    I.waitForVisible(locate(this.main.fileList).find(".//*[@draggable='true']"))
+    I.waitForVisible(this.header.list)
+
+    if (await I.waitDisplayed(this.modalContent.anonymousEdit.edit, 1) === true) {
+      I.click(this.modalContent.anonymousEdit.edit)
+      I.waitForInvisible(this.modalContent.anonymousEdit.edit)
+    }
   },
 
-  /**
-   * 提交登录
-   *
-   * @param {*} account
-   * @param {*} password
-   */
-  signIn(account, password) {
-    I.fillField(this.main.account, account)
-    I.fillField(this.main.password, password)
-    I.click(this.main.submitButton)
-  },
 
-  /**
-   * M站提交登录
-   *
-   * @param {*} account
-   * @param {*} password
-   */
-  mSignIn(account, password) {
-    I.fillField(this.m_main.account, account)
-    I.fillField(this.m_main.password, password)
-    I.click(this.m_main.submitButton)
-  }
 }

@@ -35,6 +35,10 @@ class WdHelper extends Helper {
     return rtn
   }
 
+  async waitJsObjectDefined(objName, sec){
+    const browser = await this.helpers['WebDriver'].browser
+  }
+
 }
 
 module.exports = WdHelper
