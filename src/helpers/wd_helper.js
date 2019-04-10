@@ -16,7 +16,7 @@ class WdHelper extends Helper {
   /**
    * 等待指定时间,元素是否显示
    * 
-   * @param {*} locator 
+   * @param {*} locator 元素定位,可以是对象和字符串
    * @param {*} sec 
    * 
    * @returns true=显示 false=不显示
@@ -26,7 +26,16 @@ class WdHelper extends Helper {
     let rtn = true
     try{
       await browser.waitUntil(async () => {
-        const ele = await browser.$(Object.values(locator)[0])
+        let ele = null
+        switch (typeof locator) {
+          case "object":
+            ele =  await browser.$(Object.values(locator)[0])
+            break;
+          case "string":
+            ele =  await browser.$(locator)
+            break;
+        }
+
         return  ele.isDisplayed()
       }, sec*1000, '等待超时,元素没有显示');
     }catch(err){
@@ -35,7 +44,11 @@ class WdHelper extends Helper {
     return rtn
   }
 
+  elementDisplayed(locator){
 
+  }
+
+  
 }
 
 module.exports = WdHelper

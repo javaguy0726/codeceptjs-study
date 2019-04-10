@@ -5,9 +5,9 @@ exports.config = {
     WebDriver: {
       url: 'http://localhost',
       browser: 'chrome',
-      host: '172.16.20.168',
-      port: 4443,
-      path: '/wd/hub',
+      // host: '172.16.20.168',
+      // port: 4443,
+      // path: '/wd/hub',
       restart: false,
       keepBrowserState: true,
       // keepCookies: false,
@@ -32,7 +32,7 @@ exports.config = {
   include: {
     I: './src/custom_steps.js',
     officalPages: './src/pages/official',
-
+    sheetPages:'./src/pages/sheet',
     officialFragments: './src/fragments/official',
 
   },

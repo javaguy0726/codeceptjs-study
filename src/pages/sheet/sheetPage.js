@@ -341,7 +341,11 @@ module.exports = {
       I.waitForInvisible(this.modalContent.anonymousEdit.edit)
     }
 
+
   },
 
+  handleHintBars(){
+    
+  }
 
 }
