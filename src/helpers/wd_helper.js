@@ -1,9 +1,15 @@
 let Helper = codecept_helper
 
 class WdHelper extends Helper {
-  _before() { }
+  _before() {
+  }
 
-  _after() { }
+  _after() {
+
+  }
+
+  _init(){
+  }
 
   async findElements(strictLocator) {
     return await this.helpers['WebDriver']._locate(strictLocator)
@@ -24,31 +30,50 @@ class WdHelper extends Helper {
   async waitDisplayed(locator, sec) {
     const browser = await this.helpers['WebDriver'].browser
     let rtn = true
-    try{
+    try {
       await browser.waitUntil(async () => {
-        let ele = null
-        switch (typeof locator) {
-          case "object":
-            ele =  await browser.$(Object.values(locator)[0])
-            break;
-          case "string":
-            ele =  await browser.$(locator)
-            break;
-        }
-
-        return  ele.isDisplayed()
-      }, sec*1000, '等待超时,元素没有显示');
-    }catch(err){
+        const ele = await browser.$(parseLocator(locator))
+        return ele.isDisplayed()
+      }, sec * 1000, '等待超时,元素没有显示');
+    } catch (err) {
       rtn = false
     }
     return rtn
   }
 
-  elementDisplayed(locator){
-
+  /**
+   * 元素是否显示
+   * 
+   * @param {*} locator 
+   */
+  async elementDisplayed(locator) {
+    let rtn = true
+    try {
+      const ele = await browser.$(parseLocator(locator))
+      rtn = ele.isDisplayed()
+    } catch (err) {
+      rtn = false
+    }
+    return rtn
   }
 
-  
+  /**
+   * 解析元素定位,并返回定位字符串,如果不匹配则返回"error"
+   * @param {*} locator 
+   */
+  parseLocator(locator) {
+    let rtn = "error"
+    switch (typeof locator) {
+      case "object":
+        rtn = Object.values(locator)[0]
+        break;
+      case "string":
+        rtn = locator
+        break;
+    }
+    return rtn;
+  }
+
 }
 
 module.exports = WdHelper

@@ -55,7 +55,7 @@ module.exports = {
     },
 
     //下划线
-    italic: {
+    underline: {
       button: { css: '.icon--underline' },
     },
 
@@ -64,7 +64,7 @@ module.exports = {
       button: { css: '.icon--strike' },
     },
 
-    //删除线
+    //字体
     font: {
       button: { css: '.toolBar--fontSize' },
       dropdown: { css: "[data-tooltip='字号'] + .menu--body" },
@@ -169,10 +169,10 @@ module.exports = {
       button: { css: ".icon--find_replace" },
       container: {
         root: { css: ".search-replace-container" },
-        searchBtn: { xpath: ".//div[contains(@class,'search-container')]//div[text()='查找']" },
-        notFoundText: { xpath: ".//div[text()='未找到']" },
-        searchField: { xpath: ".//input[@placeholder='在工作表中搜索']" },
-        searchResult: { css: ".matches-navigator>.text" },
+        searchBzititn: { xpath: ".//div[contains(@class,'search-container')]//div[text()='查找']" },
+        notFounzitidText: { xpath: ".//div[text()='未找到']" },
+        searchFzitiield: { xpath: ".//input[@placeholder='在工作表中搜索']" },
+        searchRzitiesult: { css: ".matches-navigator>.text" },
         pre: { css: ".matches-navigator>.icon-prev" },
         next: { css: ".matches-navigator>.icon-next" },
         replaceField: { css: ".replace-container input" },
