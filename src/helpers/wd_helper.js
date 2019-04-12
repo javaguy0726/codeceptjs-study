@@ -5,12 +5,29 @@ class WdHelper extends Helper {
   }
 
   _after() {
-
   }
 
   _init(){
   }
 
+  _beforeStep(){
+  }
+
+  _afterStep(){
+    
+  }
+
+  _beforeSuite(){
+  }
+
+  _afterSuite(){
+  }
+
+  _passed(){
+  } 
+
+  _failed(){
+  }
   async findElements(strictLocator) {
     return await this.helpers['WebDriver']._locate(strictLocator)
   }

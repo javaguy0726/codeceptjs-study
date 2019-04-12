@@ -7,6 +7,7 @@ Feature('字符串存储的数字')
 
 Scenario('1', async (I, officalPages, sheetPages) => {
   I.amOnPage('https://shimo.im/login')
+  I.amOnPage('https://shimo.im/login')
   
   // officalPages.loginPage.waitForPageToLoad()
   // officalPages.loginPage.signIn('autotest1@shimo.im', '123456')
@@ -19,6 +20,7 @@ Scenario('1', async (I, officalPages, sheetPages) => {
 })  
 
 Scenario('2', async (I, officalPages, sheetPages) => {
+  I.amOnPage('https://shimo.im/login')
   I.amOnPage('https://shimo.im/login')
   
 })  
