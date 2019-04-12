@@ -2,6 +2,7 @@ let Helper = codecept_helper
 
 class WdHelper extends Helper {
   _before() {
+
   }
 
   _after() {
@@ -9,6 +10,7 @@ class WdHelper extends Helper {
   }
 
   _init(){
+    this.driver = this.helpers['WebDriver']
   }
 
   async findElements(strictLocator) {
