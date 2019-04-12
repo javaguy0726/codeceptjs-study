@@ -2,12 +2,14 @@ let Helper = codecept_helper
 
 class WdHelper extends Helper {
   _before() {
+
   }
 
   _after() {
   }
 
   _init(){
+    this.driver = this.helpers['WebDriver']
   }
 
   _beforeStep(){
