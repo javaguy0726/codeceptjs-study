@@ -2,7 +2,11 @@
 
 module.exports = function () {
   return actor({
-    
+
+    coorCellCenter: function (row, col, canvas) {
+      const { cellX, cellY } = this.apiGetCellRect(row, col)
+
+    },
 
   })
 }

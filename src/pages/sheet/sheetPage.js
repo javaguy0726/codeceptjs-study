@@ -1,4 +1,5 @@
-const I = actor()
+const customSteps = require('../../custom_steps')
+const I = actor(customSteps())
 
 module.exports = {
   root: { id: '#root' },
@@ -326,13 +327,18 @@ module.exports = {
     uploadingImg: { xpath: ".//p[contains(text(),'图片正在上传')]" },
 
     newFunc: {
-      addMoreFormat: { xpath: ".//p[text()='新增更多格式']" },
-      addFilterView: { xpath: ".//p[contains(text(),'新增筛选视图功能，协作者可独立创建筛选')]" },
-      addSwitchToolBar: { xpath: ".//p[contains(text(),'点击切换工具栏')]" },
+      moreFormat: { xpath: ".//p[text()='新增更多格式']" },
+      filterView: { xpath: ".//p[contains(text(),'新增筛选视图功能，协作者可独立创建筛选')]" },
+      switchToolBar: { xpath: ".//p[contains(text(),'点击切换工具栏')]" },
+      customFormula: { xpath: ".//p[contains(text(),'新增范围列表和自定义公式')]" },
+      deleteRepeat: { xpath: ".//p[contains(text(),'删除重复项')]" },
     },
   },
 
 
+  /**
+   * 等待页面加载
+   */
   async waitForPageToLoad() {
     I.waitForFunction(() => typeof window.postMessage === "function" && typeof sheetApi === "object", 20)
 
@@ -341,11 +347,57 @@ module.exports = {
       I.waitForInvisible(this.modalContent.anonymousEdit.edit)
     }
 
-
   },
 
-  handleHintBars(){
-    
-  }
+  /**
+   * 处理新功能弹出提示框(如果有)
+   */
+  async handleHintBars() {
+    let bars = []
+    bars.push(this.tips.newFunc.moreFormat)
+    bars.push(this.tips.newFunc.filterView)
+    bars.push(this.tips.newFunc.switchToolBar)
+    bars.push(this.tips.newFunc.customFormula)
+    bars.push(this.tips.newFunc.deleteRepeat)
+
+    bars.forEach(async (b) => {
+      if (await I.elementDisplayed(b)) {
+        I.click(b)
+        I.waitForInvisible(b, 1)
+      }
+    })
+  },
+
+  /**
+   * 重新进入本页
+   */
+  async enter() {
+    let url = await I.grabCurrentUrl()
+    url = url.indexOf('?test=true') === -1 ? url + '?test=true' : url
+    I.amOnPage(url)
+    await this.waitForPageToLoad()
+  },
+
+  /**
+   * 展开toolbar
+   */
+  async expandToolbar() {
+    if (await I.elementDisplayed(this.toolbar.switchBtnClose)) {
+      I.click(this.toolbar.switchBtnClose)
+    }
+    I.waitForVisible(this.toolbar.switchBtnOpen)
+  },
+
+  /**
+   * 折叠toolbar
+   */
+  async expandToolbar() {
+    if (await I.elementDisplayed(this.toolbar.switchBtnOpen)) {
+      I.click(this.toolbar.switchBtnOpen)
+    }
+    I.waitForVisible(this.toolbar.switchBtnClose)
+  },
+
+
 
 }
