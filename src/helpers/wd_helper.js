@@ -8,7 +8,11 @@ class WdHelper extends Helper {
   _after() {
   }
 
-  _init(){
+  _init() {
+    
+  }
+
+  _beforeSuite(){
     this.driver = this.helpers['WebDriver']
   }
 
@@ -31,11 +35,11 @@ class WdHelper extends Helper {
   _failed(){
   }
   async findElements(strictLocator) {
-    return await this.helpers['WebDriver']._locate(strictLocator)
+    return await this.driver._locate(strictLocator)
   }
 
   async findSubElements(fatherLocator, childLocator) {
-    return await this.helpers['WebDriver']._locate(fatherLocator).then(_locate(childLocator))
+    return await this.driver._locate(fatherLocator).then(_locate(childLocator))
   }
 
   /**
@@ -47,7 +51,7 @@ class WdHelper extends Helper {
    * @returns true=显示 false=不显示
    */
   async waitDisplayed(locator, sec) {
-    const browser = await this.helpers['WebDriver'].browser
+    const browser = await this.driver.browser
     let rtn = true
     try {
       await browser.waitUntil(async () => {
@@ -66,6 +70,7 @@ class WdHelper extends Helper {
    * @param {*} locator 
    */
   async elementDisplayed(locator) {
+    const browser = await this.driver.browser
     let rtn = true
     try {
       const ele = await browser.$(parseLocator(locator))
@@ -74,6 +79,62 @@ class WdHelper extends Helper {
       rtn = false
     }
     return rtn
+  }
+
+  /**
+   * 获取元素左上角的坐标
+   * 
+   * @param {*} locator 
+   * 
+   * @returns ex:{ x: 150, y: 20 }
+   */
+  async elementGetLocation(locator) {
+    const browser = await this.driver.browser
+    const ele = await browser.$(parseLocator(locator))
+    const location = ele.getLocation()
+
+    return location
+  }
+
+  /**
+   * api获取单元格的rect
+   * 
+   * @param {*} row 行数（0开始）
+   * @param {*} col 列数
+   * 
+   * @returns rect, ex: {x: 50, y: 22, width: 100, height: 22}
+   */
+  async apiGetCellRect(row, col) {
+    const browser = await this.driver.browser
+    const rect = await browser.execute((r, c) => {
+      sheetApi.editor.spread.gcSpread.getActiveSheet().getCellRect(r, c)
+    }, row, col)
+
+    return rect
+  }
+
+  /**
+   * api获取总列数
+   */
+  async apiGetColumnCount() {
+    const browser = await this.driver.browser
+    const colCounts = await browser.execute(() => {
+      sheetApi.editor.spread.gcSpread.getActiveSheet().getColumnCount()
+    })
+
+    return colCounts
+  }
+
+  /**
+   * api获取总行数
+   */
+  async apiGetRowCount() {
+    const browser = await this.driver.browser
+    const rowCounts = await browser.execute(() => {
+      sheetApi.editor.spread.gcSpread.getActiveSheet().getRowCount()
+    })
+
+    return rowCounts
   }
 
   /**
