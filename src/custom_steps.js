@@ -4,42 +4,6 @@ module.exports = function () {
   return actor({
 
     /**
-     * cell的中心点坐标
-     * 
-     * @param {*} row 
-     * @param {*} col 
-     * @param {*} canvas 
-     */
-    async coorCellCenter: function (row, col, canvas) {
-      const {x:cellX, y:cellY, width:cellWidth, height:cellHeight } = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
-
-      return {
-            x:cellX+canvasX+cellWidth/2, 
-            y:cellY+canvasY+cellHeight/2
-          }
-
-    },
-
-    /**
-     * cell左上角坐标
-     * 
-     * @param {*} row 
-     * @param {*} col 
-     * @param {*} canvas 
-     */
-    async coorCellLeftTop: function (row, col, canvas) {
-      const {x:cellX, y:cellY} = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
-
-      return {
-            x:cellX+canvasX, 
-            y:cellY+canvasY
-          }
-
-    },
-
-    /**
      * cell接近左上角（出现手型的位置）
      * 
      * @param {*} row 
@@ -47,13 +11,13 @@ module.exports = function () {
      * @param {*} canvas 
      */
     async coorCellNearlyLeftTop: function (row, col, canvas) {
-      const {x:cellX, y:cellY, width:cellWidth, height:cellHeight } = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
+      const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await this.apiGetCellRect(row, col)
+      const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
 
       return {
-            x:cellX+canvasX+cellWidth/20, 
-            y:cellY+canvasY+cellHeight/20
-          }
+        x: cellX + canvasX + cellWidth / 20,
+        y: cellY + canvasY + cellHeight / 20
+      }
 
     },
 
@@ -64,16 +28,16 @@ module.exports = function () {
      * @param {*} canvas 
      */
     async coorCellNearlyRightMiddle: function (row, col, canvas) {
-      const {x:cellX, y:cellY, width:cellWidth, height:cellHeight } = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
+      const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await this.apiGetCellRect(row, col)
+      const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
 
       return {
-            x:cellX+canvasX+(cellWidth*7)/8, 
-            y:cellY+canvasY+cellHeight/2
-          }
+        x: cellX + canvasX + (cellWidth * 7) / 8,
+        y: cellY + canvasY + cellHeight / 2
+      }
 
     },
-    
+
     /**
      * cell右中
      * @param {*} row 
@@ -81,13 +45,13 @@ module.exports = function () {
      * @param {*} canvas 
      */
     async coorCellRightMiddle: function (row, col, canvas) {
-      const {x:cellX, y:cellY, width:cellWidth, height:cellHeight } = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
+      const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await this.apiGetCellRect(row, col)
+      const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
 
       return {
-            x:cellX+canvasX+cellWidth, 
-            y:cellY+canvasY+cellHeight/2
-          }
+        x: cellX + canvasX + cellWidth,
+        y: cellY + canvasY + cellHeight / 2
+      }
 
     },
 
@@ -98,13 +62,13 @@ module.exports = function () {
      * @param {*} canvas 
      */
     async coorCellCenterBottom: function (row, col, canvas) {
-      const {x:cellX, y:cellY, width:cellWidth, height:cellHeight } = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
+      const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await this.apiGetCellRect(row, col)
+      const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
 
       return {
-            x:cellX+canvasX+cellWidth/2, 
-            y:cellY+canvasY+cellHeight
-          }
+        x: cellX + canvasX + cellWidth / 2,
+        y: cellY + canvasY + cellHeight
+      }
 
     },
 
@@ -116,24 +80,24 @@ module.exports = function () {
      * @param {*} canvas 
      */
     async coorCellLeftMiddle: function (row, col, canvas) {
-      const {x:cellX, y:cellY, height:cellHeight } = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
+      const { x: cellX, y: cellY, height: cellHeight } = await this.apiGetCellRect(row, col)
+      const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
 
       return {
-            x:cellX+canvasX, 
-            y:cellY+canvasY+cellHeight/2
-          }
+        x: cellX + canvasX,
+        y: cellY + canvasY + cellHeight / 2
+      }
 
     },
 
     async coorRowMiddle: function (row, canvas) {
-      const {x:cellX, y:cellY, width:cellWidth, height:cellHeight } = await this.apiGetCellRect(row, col)
-      const {x:canvasX, y:canvasY} = await this.elementGetLocation(canvas)
+      const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await this.apiGetCellRect(row, col)
+      const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
 
       return {
-            x:cellX+canvasX, 
-            y:cellY+canvasY+cellHeight/2
-          }
+        x: cellX + canvasX,
+        y: cellY + canvasY + cellHeight / 2
+      }
 
     },
 

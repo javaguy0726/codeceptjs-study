@@ -1,5 +1,4 @@
-const customSteps = require('../../custom_steps')
-const I = actor(customSteps())
+const I = actor()
 
 module.exports = {
   root: { id: '#root' },
@@ -396,6 +395,43 @@ module.exports = {
       I.click(this.toolbar.switchBtnOpen)
     }
     I.waitForVisible(this.toolbar.switchBtnClose)
+  },
+
+
+  /**
+    * cell的中心点坐标
+    * 
+    * @param {*} row 
+    * @param {*} col 
+    * @param {*} canvas 
+    */
+  async coorCellCenter: function (row, col) {
+    const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await I.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX + canvasX + cellWidth / 2,
+      y: cellY + canvasY + cellHeight / 2
+    }
+
+  },
+
+  /**
+      * cell左上角坐标
+      * 
+      * @param {*} row 
+      * @param {*} col 
+      * @param {*} canvas 
+      */
+  async coorCellLeftTop: function (row, col) {
+    const { x: cellX, y: cellY } = await this.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
+
+    return {
+      x: cellX + canvasX,
+      y: cellY + canvasY
+    }
+
   },
 
 
