@@ -167,6 +167,74 @@ class WdHelper extends Helper {
   }
 
   /**
+   * api获取行高
+   * 
+   * @param {*} row 
+   */
+  async apiGetRowHeight(row) {
+    const browser = await this.driver.browser
+    const rHeight = await browser.execute((r) => {
+      sheetApi.editor.spread.gcSpread.getActiveSheet().getRowHeight(r)
+    },row)
+
+    return rHeight
+  }
+
+  /**
+   * api获取列宽
+   * 
+   * @param {*} col 
+   */
+  async apiGetRowHeight(col) {
+    const browser = await this.driver.browser
+    const cWidth = await browser.execute((c) => {
+      sheetApi.editor.spread.gcSpread.getActiveSheet().getColumnWidth(c)
+    }, col)
+
+    return cWidth
+  }
+
+  /**
+   * api获取数据验证的个数
+   */
+  async apiGetValidatorLength() {
+    const browser = await this.driver.browser
+    const valiLen = await browser.execute(() => {
+      return sheetApi.editor.spread.gcSpread.getActiveSheet()._validations._validators.length
+    })
+
+    return valiLen
+  }
+
+  /**
+   * 添加sheet
+   */
+  async apiAddSheet() {
+    const browser = await this.driver.browser
+    const curSheet = await browser.execute(() => {
+      sheetApi.addSheet()
+      sheetApi.editor.spread.getActiveSheetIndex()
+    })
+
+    return curSheet
+  }
+
+  /**
+   * api创建sheet副本
+   * @param {*} index 
+   */
+  async apiCopySheet(index) {
+    const browser = await this.driver.browser
+    const curIndex = await browser.execute((idx) => {
+      typeof idx === 'number' || (idx = sheetApi.editor.spread.getActiveSheetIndex())
+      sheetApi.editor.spread.copySheet(sheetApi.editor.spread.getSheetByIndex(idx).id)
+      return sheetApi.editor.spread.getActiveSheetIndex()
+    }, index)
+
+    return curIndex
+  }
+
+  /**
    * 解析元素定位,并返回定位字符串,如果不匹配则返回"error"
    * @param {*} locator 
    */

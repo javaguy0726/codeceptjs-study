@@ -398,6 +398,9 @@ module.exports = {
   },
 
 
+  /**
+   * 鼠标移动到屏幕的左上角
+   */
   async mouseToStart(){
     I.moveCursorTo(this.root)
     const rootSize = await I.elementGetSize(this.root) 
