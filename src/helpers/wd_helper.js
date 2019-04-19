@@ -9,31 +9,32 @@ class WdHelper extends Helper {
   }
 
   _init() {
-    
+
   }
 
-  _beforeSuite(){
+  _beforeSuite() {
     this.driver = this.helpers['WebDriver']
   }
 
-  _beforeStep(){
+  _beforeStep() {
   }
 
-  _afterStep(){
-    
+  _afterStep() {
+
   }
 
-  _beforeSuite(){
+  _beforeSuite() {
   }
 
-  _afterSuite(){
+  _afterSuite() {
   }
 
-  _passed(){
-  } 
-
-  _failed(){
+  _passed() {
   }
+
+  _failed() {
+  }
+
   async findElements(strictLocator) {
     return await this.driver._locate(strictLocator)
   }
@@ -41,6 +42,7 @@ class WdHelper extends Helper {
   async findSubElements(fatherLocator, childLocator) {
     return await this.driver._locate(fatherLocator).then(_locate(childLocator))
   }
+
 
   /**
    * 等待指定时间,元素是否显示
@@ -64,6 +66,33 @@ class WdHelper extends Helper {
     return rtn
   }
 
+
+  /**
+   * 执行action操作
+   * 
+   * @param {*} action 要执行的操作,EX:
+   * [
+        { action: 'press', x: 200, y: 200 },
+        { action: 'moveTo', x: 200, y: 300 },
+        'release'
+    ]
+   */
+  async touchAction(action) {
+    const browser = await this.driver.browser
+    await browser.touchAction(action)
+  }
+
+  /**
+   * 获取元素大小
+   * 
+   * @param {*} locator 
+   * @returns { width: 32, height: 32 }
+   */
+  async elementGetSize(locator){
+    const browser = await this.driver.browser
+    const ele = await browser.$(parseLocator(locator))
+    return ele.getSize()
+  }
   /**
    * 元素是否显示
    * 

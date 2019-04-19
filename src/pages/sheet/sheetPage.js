@@ -390,11 +390,20 @@ module.exports = {
   /**
    * 折叠toolbar
    */
-  async expandToolbar() {
+  async encloseToolbar() {
     if (await I.elementDisplayed(this.toolbar.switchBtnOpen)) {
       I.click(this.toolbar.switchBtnOpen)
     }
     I.waitForVisible(this.toolbar.switchBtnClose)
+  },
+
+
+  async mouseToStart(){
+    I.moveCursorTo(this.root)
+    const rootSize = await I.elementGetSize(this.root) 
+    await I.touchAction({
+     action: 'moveTo', x: - rootSize.width/2, y: - rootSize.height/2
+    })
   },
 
 
@@ -403,9 +412,8 @@ module.exports = {
     * 
     * @param {*} row 
     * @param {*} col 
-    * @param {*} canvas 
     */
-  async coorCellCenter: function (row, col) {
+  async coorCellCenter(row, col) {
     const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await I.apiGetCellRect(row, col)
     const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
@@ -417,15 +425,14 @@ module.exports = {
   },
 
   /**
-      * cell左上角坐标
-      * 
-      * @param {*} row 
-      * @param {*} col 
-      * @param {*} canvas 
-      */
-  async coorCellLeftTop: function (row, col) {
-    const { x: cellX, y: cellY } = await this.apiGetCellRect(row, col)
-    const { x: canvasX, y: canvasY } = await this.elementGetLocation(canvas)
+    * cell左上
+    * 
+    * @param {*} row 
+    * @param {*} col 
+    */
+  async coorCellLeftTop(row, col) {
+    const { x: cellX, y: cellY } = await I.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
     return {
       x: cellX + canvasX,
@@ -434,6 +441,165 @@ module.exports = {
 
   },
 
+  /**
+   * cell接近左上角（出现手型的位置）
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async coorCellNearlyLeftTop(row, col) {
+    const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await I.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
+    return {
+      x: cellX + canvasX + cellWidth / 20,
+      y: cellY + canvasY + cellHeight / 20
+    }
+  },
+
+  /**
+   * cell靠近右中（三角下拉箭头显示的位置）
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async coorCellNearlyRightMiddle(row, col) {
+    const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await I.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX + canvasX + cellWidth * 7 / 8,
+      y: cellY + canvasY + cellHeight / 2
+    }
+
+
+  },
+
+  /**
+   * cell右中
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async coorCellRightMiddle(row, col) {
+    const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await I.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX + canvasX + cellWidth,
+      y: cellY + canvasY + cellHeight / 2
+    }
+
+  },
+
+  /**
+   * cell下中
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async coorCellCenterBottom(row, col) {
+    const { x: cellX, y: cellY, width: cellWidth, height: cellHeight } = await I.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX + canvasX + cellWidth / 2,
+      y: cellY + canvasY + cellHeight
+    }
+
+  },
+
+  /**
+   * cell左中
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async coorCellLeftMiddle(row, col) {
+    const { x: cellX, y: cellY, height: cellHeight } = await I.apiGetCellRect(row, col)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX + canvasX,
+      y: cellY + canvasY + cellHeight / 2
+    }
+  },
+
+  /**
+   * row头部中间
+   * 
+   * @param {*} row 
+   */
+  async coorRowHeadMiddle(row) {
+    const { x: cellX, y: cellY,  height: cellHeight } = await I.apiGetCellRect(row, 0)
+    const {  y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX / 2,
+      y: cellY + canvasY + cellHeight / 2
+    }
+
+  },
+
+  /**
+   * row头部底线
+   * 
+   * @param {*} row 
+   */
+  async coorRowHeadBottom(row) {
+    const { x: cellX, y: cellY,  height: cellHeight } = await I.apiGetCellRect(row, 0)
+    const {  y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX / 2,
+      y: cellY + canvasY + cellHeight
+    }
+
+  },
+
+  /**
+   * col头部中间
+   * 
+   * @param {*} col 
+   */
+  async coorColHeadCenter(col) {
+    const { x: cellX, y: cellY, width: cellWidth} = await I.apiGetCellRect(0, col)
+    const { y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX+cellWidth/2,
+      y: canvasY+cellY/2
+    }
+
+  },
+
+
+  /**
+   * col 头部右边线
+   * 
+   * @param {*} col 
+   */
+  async coorColHeadRight(col) {
+    const { x: cellX, y: cellY, width: cellWidth} = await I.apiGetCellRect(0, col)
+    const {  y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX+cellWidth,
+      y: canvasY+cellY/2
+    }
+
+  },
+
+  /**
+   * 全选表格按钮的坐标
+   */
+  async coorFullSelect() {
+    const { x: cellX, y: cellY } = await I.apiGetCellRect(0, 0)
+    const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+
+    return {
+      x: cellX/2+canvasX,
+      y: cellY/2+canvasY
+    }
+
+  },
 
 }
