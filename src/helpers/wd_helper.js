@@ -213,10 +213,84 @@ class WdHelper extends Helper {
     const browser = await this.driver.browser
     const curSheet = await browser.execute(() => {
       sheetApi.addSheet()
-      sheetApi.editor.spread.getActiveSheetIndex()
+      sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
     })
 
     return curSheet
+  }
+
+  /**
+   * 切换到sheet
+   * @param {*} index 
+   */
+  async apiSwitchToSheet(index) {
+    const browser = await this.driver.browser
+    const curSheet = await browser.execute((idx) => {
+      const sheetId = sheetApi.editor.spread.sheets[idx].id
+      sheetApi.editor.spread.setActiveSheet(sheetId);
+      return sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
+    }, index)
+
+    return curSheet
+  }
+
+  /**
+   * 重命名sheet
+   * 
+   * @param {*} index 
+   * @param {*} name 
+   */
+  async apiRenameSheet(index, name) {
+    const browser = await this.driver.browser
+    const curSheet = await browser.execute((idx, n) => {
+      const sheetId = sheetApi.editor.spread.sheets[idx].id
+      sheetApi.editor.spread.setActiveSheet(sheetId);
+      sheetApi.editor.spread.renameSheet(sheetApi.editor.spread.getActiveSheet().id, n)
+      return sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
+    }, index, name)
+
+    return curSheet
+  }
+
+  /**
+   * 删除sheet
+   * 
+   * @param {*} index 
+   */
+  async apiDeleteSheet(index) {
+    const browser = await this.driver.browser
+    const curSheet = await browser.execute((idx) => {
+      const sheetId = sheetApi.editor.spread.sheets[idx].id
+      sheetApi.editor.spread.setActiveSheet(sheetId)
+      sheetApi.deleteSheet()
+      return sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
+    }, index)
+
+    return curSheet
+  }
+
+  /**
+   * 获取激活sheet的编号
+   */
+  async apiGetActiveSheetIndex() {
+    const browser = await this.driver.browser
+    const curSheet = await browser.execute(() => {
+      return sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
+    })
+
+    return curSheet
+  }
+
+  /**
+   * 获取激活sheet的名字
+   */
+  async apiGetActiveSheetName() {
+    const browser = await this.driver.browser
+    const sheetName = await browser.execute(() => {
+      return sheetApi.editor.spread.gcSpread.getActiveSheet()._name
+    })
+
+    return sheetName
   }
 
   /**
@@ -226,12 +300,159 @@ class WdHelper extends Helper {
   async apiCopySheet(index) {
     const browser = await this.driver.browser
     const curIndex = await browser.execute((idx) => {
-      typeof idx === 'number' || (idx = sheetApi.editor.spread.getActiveSheetIndex())
+      typeof idx === 'number' || (idx = sheetApi.editor.spread.gcSpread.getActiveSheetIndex())
       sheetApi.editor.spread.copySheet(sheetApi.editor.spread.getSheetByIndex(idx).id)
-      return sheetApi.editor.spread.getActiveSheetIndex()
+      return sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
     }, index)
 
     return curIndex
+  }
+
+
+  /**
+   * 选择区域(可无视可视范围)
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   * @param {*} rowCount 
+   * @param {*} colCount 
+   */
+  async apiSetSelection(row, col , rowCount, colCount) {
+    const browser = await this.driver.browser
+     await browser.execute((r, c, rc, cc) => {
+      sheetApi.setSelection(r, c ,rc, cc)
+    }, row, col , rowCount, colCount)
+
+  }
+
+  /**
+   * 插入行
+   * 
+   * @param {*} row 
+   * @param {*} rowCount 
+   * @param {*} direction 方向，可选值['up','down'] 
+   */
+  async apiAddRows(row, rowCount, direction) {
+    const browser = await this.driver.browser
+     await browser.execute((r,rc,drt) => {
+      sheetApi.editor.spread.getActiveSheet().addRows(r, rc, drt)     
+    }, row, rowCount, direction)
+
+  }
+
+  /**
+   * 添加列
+   * 
+   * @param {*} col 
+   * @param {*} colCount 
+   * @param {*} direction 方向, 可选值 ['right' , 'left']
+   */
+  async apiAddCols(col, colCount, direction) {
+    const browser = await this.driver.browser
+     await browser.execute((c,cc,drt) => {
+      sheetApi.editor.spread.getActiveSheet().addColumns(c, cc, drt)     
+    }, col, colCount, direction)
+
+  }
+
+  /**
+   * 删除列
+   * 
+   * @param {*} col 
+   * @param {*} colCount 
+   */
+  async apiDeleteCols(col, colCount) {
+    const browser = await this.driver.browser
+     await browser.execute((c,cc) => {
+      sheetApi.editor.spread.getActiveSheet().removeColumns(c,cc);     
+    }, col, colCount)
+
+  }
+
+  /**
+   * 删除行
+   * 
+   * @param {*} row 
+   * @param {*} rowCount 
+   */
+  async apiDeleteRows(row, rowCount) {
+    const browser = await this.driver.browser
+     await browser.execute((r,rc) => {
+      sheetApi.editor.spread.getActiveSheet().removeRows(r,rc);     
+    }, row, rowCount)
+  }
+
+  /**
+   * 选中行
+   * 
+   * @param {*} row 
+   * @param {*} rowCount 
+   */
+  async apiSelectRows(row, rowCount) {
+    const browser = await this.driver.browser
+     await browser.execute((r,rc) => {
+      sheetApi.selectRows(r,rc);     
+    }, row, rowCount)
+  }
+
+  /**
+   * 
+   * 选中列
+   * @param {*} col 
+   * @param {*} colCount 
+   */
+  async apiSelectCols(col, colCount) {
+    const browser = await this.driver.browser
+     await browser.execute((c,cc) => {
+      sheetApi.selectCols(c,cc);     
+    }, col, colCount)
+  }
+
+  /**
+   * 设置样式
+   * @param {*} type 
+   * @param {*} value 
+   */
+  async apiSetStyle(type, value) {
+    const browser = await this.driver.browser
+     await browser.execute((t,v) => {
+      sheetApi.setStyle(t,v)    
+    }, type, value)
+  }
+
+  /**
+   * 添加图片
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   * @param {*} info 图片信息:{
+          height: '120',
+          width: '120',
+          images: 'https://dn-shimo-image-dev.qbox.me/6LJiJufOd3oGN3pf/avatar.jpg',
+          url: 'https://dn-shimo-image-dev.qbox.me/6LJiJufOd3oGN3pf/avatar.jpg',
+        }
+   */
+  async apiSetCellImage(row, col, info) {
+    const browser = await this.driver.browser
+     await browser.execute((r,c,i) => {
+      sheetApi.addCellImage(r,c,i)    
+    }, row, col,info)
+  }
+
+  /**
+   * 给区域设置值,默认是从1开始递增
+   * 
+   * @param  {...any} values 
+   */
+  async apiSetRangeValues(...values) {
+    const browser = await this.driver.browser
+     await browser.execute((v) => {
+       if(v.length===0){
+         automatedTest.utils.setRangeValues()  
+        }else{
+          automatedTest.utils.setRangeValues(values)  
+       }
+    }, values)
   }
 
   /**
