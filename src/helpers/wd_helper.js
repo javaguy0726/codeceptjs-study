@@ -2,7 +2,6 @@ let Helper = codecept_helper
 
 class WdHelper extends Helper {
   _before() {
-
   }
 
   _after() {
@@ -781,10 +780,57 @@ class WdHelper extends Helper {
    */
   async apiGetComment(pos) {
     const browser = await this.driver.browser
-    await browser.execute((p) => {
-      sheetApi.getComment(p)
+    const cmmt = await browser.execute((p) => {
+      return sheetApi.getComment(p)
     }, pos)
+
+    return cmmt
   }
+
+  /**
+   * 添加评论
+   * 
+   * @param {*} content 
+   */
+  async apiAddComment(content) {
+    const browser = await this.driver.browser
+    await browser.execute((cnt) => {
+      sheetApi.addComment(cnt)
+    }, content)
+
+  }
+
+  /**
+   * 删除评论项
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   * @param {*} index 
+   */
+  async apiDeleteComment(row, col, index) {
+    const browser = await this.driver.browser
+    await browser.execute((r,c,idx) => {
+      const cmmt = sheetApi.getComment({r, c})
+      sheetApi.deleteComment(cmmt[idx]['comment_guid'])
+    }, row, col, index)
+
+  }
+
+  /**
+   * 结束评论
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async apiCloseComment(row, col) {
+    const browser = await this.driver.browser
+    await browser.execute((r,c) => {
+      const cmmt = sheetApi.closeComment({r, c})
+    }, row, col)
+
+  }
+
+  //TBD 待添加更多api方法
 
   /**
    * 获取sheet的当前顺序

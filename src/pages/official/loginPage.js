@@ -3,8 +3,8 @@ const I = actor()
 module.exports = {
   main: {
     title: { xpath: './/div[@class="title"]' },
-    account: {css: 'input[placeholder="手机号或邮箱"]'},
-    password: {css:'input[placeholder="密码"]'},
+    account: {css: "input[name='mobileOrEmail']"},
+    password: {css:'input[name="password"]'},
     submitButton: { xpath: './/button[text()="立即登录" or text()="登录"]' }
   },
 
