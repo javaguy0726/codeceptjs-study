@@ -88,7 +88,7 @@ class WdHelper extends Helper {
    * @param {*} locator 
    * @returns { width: 32, height: 32 }
    */
-  async elementGetSize(locator){
+  async elementGetSize(locator) {
     const browser = await this.driver.browser
     const ele = await browser.$(parseLocator(locator))
     return ele.getSize()
@@ -136,7 +136,7 @@ class WdHelper extends Helper {
   async apiGetCellRect(row, col) {
     const browser = await this.driver.browser
     const rect = await browser.execute((r, c) => {
-      sheetApi.editor.spread.gcSpread.getActiveSheet().getCellRect(r, c)
+      sheetApi.getActiveSheet().getCellRect(r, c)
     }, row, col)
 
     return rect
@@ -148,7 +148,7 @@ class WdHelper extends Helper {
   async apiGetColumnCount() {
     const browser = await this.driver.browser
     const colCounts = await browser.execute(() => {
-      sheetApi.editor.spread.gcSpread.getActiveSheet().getColumnCount()
+      sheetApi.getActiveSheet().getColumnCount()
     })
 
     return colCounts
@@ -160,7 +160,7 @@ class WdHelper extends Helper {
   async apiGetRowCount() {
     const browser = await this.driver.browser
     const rowCounts = await browser.execute(() => {
-      sheetApi.editor.spread.gcSpread.getActiveSheet().getRowCount()
+      sheetApi.getActiveSheet().getRowCount()
     })
 
     return rowCounts
@@ -174,8 +174,8 @@ class WdHelper extends Helper {
   async apiGetRowHeight(row) {
     const browser = await this.driver.browser
     const rHeight = await browser.execute((r) => {
-      sheetApi.editor.spread.gcSpread.getActiveSheet().getRowHeight(r)
-    },row)
+      sheetApi.getActiveSheet().getRowHeight(r)
+    }, row)
 
     return rHeight
   }
@@ -188,7 +188,7 @@ class WdHelper extends Helper {
   async apiGetRowHeight(col) {
     const browser = await this.driver.browser
     const cWidth = await browser.execute((c) => {
-      sheetApi.editor.spread.gcSpread.getActiveSheet().getColumnWidth(c)
+      sheetApi.getActiveSheet().getColumnWidth(c)
     }, col)
 
     return cWidth
@@ -200,7 +200,7 @@ class WdHelper extends Helper {
   async apiGetValidatorLength() {
     const browser = await this.driver.browser
     const valiLen = await browser.execute(() => {
-      return sheetApi.editor.spread.gcSpread.getActiveSheet()._validations._validators.length
+      return sheetApi.getActiveSheet()._validations._validators.length
     })
 
     return valiLen
@@ -287,7 +287,7 @@ class WdHelper extends Helper {
   async apiGetActiveSheetName() {
     const browser = await this.driver.browser
     const sheetName = await browser.execute(() => {
-      return sheetApi.editor.spread.gcSpread.getActiveSheet()._name
+      return sheetApi.getActiveSheet()._name
     })
 
     return sheetName
@@ -317,11 +317,47 @@ class WdHelper extends Helper {
    * @param {*} rowCount 
    * @param {*} colCount 
    */
-  async apiSetSelection(row, col , rowCount, colCount) {
+  async apiSetSelection(row, col, rowCount, colCount) {
     const browser = await this.driver.browser
-     await browser.execute((r, c, rc, cc) => {
-      sheetApi.setSelection(r, c ,rc, cc)
-    }, row, col , rowCount, colCount)
+    await browser.execute((r, c, rc, cc) => {
+      sheetApi.setSelection(r, c, rc, cc)
+    }, row, col, rowCount, colCount)
+
+  }
+
+  /**
+   * 撤销
+   */
+  async apiUndo() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      sheetApi.undo()
+    })
+
+  }
+
+  /**
+   * 重做
+   */
+  async apiRedo() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      sheetApi.redo()
+    })
+
+  }
+
+  /**
+   * 获取cell的attr
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async apiGetCellAttrs(row, col) {
+    const browser = await this.driver.browser
+    await browser.execute((r, c) => {
+      sheetApi.getCellAttrs(sheetApi.getActiveSheet(), r, c)
+    }, row, col)
 
   }
 
@@ -334,8 +370,8 @@ class WdHelper extends Helper {
    */
   async apiAddRows(row, rowCount, direction) {
     const browser = await this.driver.browser
-     await browser.execute((r,rc,drt) => {
-      sheetApi.editor.spread.getActiveSheet().addRows(r, rc, drt)     
+    await browser.execute((r, rc, drt) => {
+      sheetApi.editor.spread.getActiveSheet().addRows(r, rc, drt)
     }, row, rowCount, direction)
 
   }
@@ -349,8 +385,8 @@ class WdHelper extends Helper {
    */
   async apiAddCols(col, colCount, direction) {
     const browser = await this.driver.browser
-     await browser.execute((c,cc,drt) => {
-      sheetApi.editor.spread.getActiveSheet().addColumns(c, cc, drt)     
+    await browser.execute((c, cc, drt) => {
+      sheetApi.editor.spread.getActiveSheet().addColumns(c, cc, drt)
     }, col, colCount, direction)
 
   }
@@ -363,8 +399,8 @@ class WdHelper extends Helper {
    */
   async apiDeleteCols(col, colCount) {
     const browser = await this.driver.browser
-     await browser.execute((c,cc) => {
-      sheetApi.editor.spread.getActiveSheet().removeColumns(c,cc);     
+    await browser.execute((c, cc) => {
+      sheetApi.editor.spread.getActiveSheet().removeColumns(c, cc);
     }, col, colCount)
 
   }
@@ -377,8 +413,8 @@ class WdHelper extends Helper {
    */
   async apiDeleteRows(row, rowCount) {
     const browser = await this.driver.browser
-     await browser.execute((r,rc) => {
-      sheetApi.editor.spread.getActiveSheet().removeRows(r,rc);     
+    await browser.execute((r, rc) => {
+      sheetApi.editor.spread.getActiveSheet().removeRows(r, rc);
     }, row, rowCount)
   }
 
@@ -390,9 +426,32 @@ class WdHelper extends Helper {
    */
   async apiSelectRows(row, rowCount) {
     const browser = await this.driver.browser
-     await browser.execute((r,rc) => {
-      sheetApi.selectRows(r,rc);     
+    await browser.execute((r, rc) => {
+      sheetApi.selectRows(r, rc)
     }, row, rowCount)
+  }
+
+  /**
+   * 获取随机的单元格区域
+   * 
+   * @returns 数组: [25, 7, 175, 11]
+   */
+  async apiGetRandomRange() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      return sheetApi.randomRange()
+    })
+  }
+
+  /**
+   * 删除cell, 同cell上按下Delete键
+   * 
+   */
+  async apiDeleteCell() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      sheetApi.deleteCell()
+    })
   }
 
   /**
@@ -403,8 +462,8 @@ class WdHelper extends Helper {
    */
   async apiSelectCols(col, colCount) {
     const browser = await this.driver.browser
-     await browser.execute((c,cc) => {
-      sheetApi.selectCols(c,cc);     
+    await browser.execute((c, cc) => {
+      sheetApi.selectCols(c, cc);
     }, col, colCount)
   }
 
@@ -415,9 +474,34 @@ class WdHelper extends Helper {
    */
   async apiSetStyle(type, value) {
     const browser = await this.driver.browser
-     await browser.execute((t,v) => {
-      sheetApi.setStyle(t,v)    
+    await browser.execute((t, v) => {
+      sheetApi.setStyle(t, v)
     }, type, value)
+  }
+
+  /**
+   * 设置默认样式数据(写死在api方法中)
+   */
+  async apiSetStyleData() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      automatedTest.utils.setCellStyle()
+    })
+  }
+
+  /**
+   * 添加一组包含各种格式的数据
+   * @param  {...any} data 
+   */
+  async apiSetFormatData(...data) {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      if (data.length > 0) {
+        automatedTest.utils.setFormatData(data)
+      } else {
+        automatedTest.utils.setFormatData()
+      }
+    })
   }
 
   /**
@@ -434,9 +518,9 @@ class WdHelper extends Helper {
    */
   async apiSetCellImage(row, col, info) {
     const browser = await this.driver.browser
-     await browser.execute((r,c,i) => {
-      sheetApi.addCellImage(r,c,i)    
-    }, row, col,info)
+    await browser.execute((r, c, i) => {
+      sheetApi.addCellImage(r, c, i)
+    }, row, col, info)
   }
 
   /**
@@ -446,13 +530,353 @@ class WdHelper extends Helper {
    */
   async apiSetRangeValues(...values) {
     const browser = await this.driver.browser
-     await browser.execute((v) => {
-       if(v.length===0){
-         automatedTest.utils.setRangeValues()  
-        }else{
-          automatedTest.utils.setRangeValues(values)  
-       }
+    await browser.execute((v) => {
+      if (v.length === 0) {
+        automatedTest.utils.setRangeValues()
+      } else {
+        automatedTest.utils.setRangeValues(values)
+      }
     }, values)
+  }
+
+  /**
+   * 合并单元格
+   */
+  async apiMergeCells() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      sheetApi.mergeCells()
+    })
+  }
+
+  /**
+   * 解除合并单元格
+   */
+  async apiUnMergeCells() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      sheetApi.unMergeCells()
+    })
+  }
+
+  /**
+   * api设置链接
+   * 
+   * @param {*} info 链接的信息, 如:
+   * {
+          url: 'http://www.gagaga.com',
+          text: 'baidu',
+          row:1,
+          col:2,
+        }
+   */
+  async apiSetLink(info) {
+    const browser = await this.driver.browser
+    await browser.execute((i) => {
+      sheetApi.setLink(i)
+    }, info)
+  }
+
+  /**
+   * 取消选择区域内的link
+   */
+  async apiCancelLinks() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      sheetApi.cancelLinks()
+    })
+  }
+
+  /**
+   * 获取区域的value
+   */
+  async apiGetRangeValues() {
+    const browser = await this.driver.browser
+    const rtnVal = await browser.execute(() => {
+      return automatedTest.utils.getRangeValues()
+    })
+
+    return rtnVal
+  }
+
+  /**
+   * 获取区域的Text
+   */
+  async apiGetRangeTexts() {
+    const browser = await this.driver.browser
+    const rtnVal = await browser.execute(() => {
+      return automatedTest.utils.getRangeTexts()
+    })
+
+    return rtnVal
+  }
+
+  /**
+   * 获取区域的rect
+   */
+  async apiGetRangeRects() {
+    const browser = await this.driver.browser
+    const rtnVal = await browser.execute(() => {
+      return automatedTest.utils.getRangeCellRects()
+    })
+
+    return rtnVal
+  }
+
+  /**
+   * 获取区域的attr
+   */
+  async apiGetRangeAttrs() {
+    const browser = await this.driver.browser
+    const rtnVal = await browser.execute(() => {
+      return automatedTest.utils.getRangeAttrs()
+    })
+
+    return rtnVal
+  }
+
+  /**
+   * 获取区域的actual styles
+   */
+  async apiGetRangeActualStyle() {
+    const browser = await this.driver.browser
+    const rtnVal = await browser.execute(() => {
+      return automatedTest.utils.getRangeActualStyles()
+    })
+
+    return rtnVal
+  }
+
+  /**
+   * 获取sheet的个数
+   */
+  async apiGetSheetNumber() {
+    const browser = await this.driver.browser
+    const rtnLen = await browser.execute(() => {
+      return sheetApi.editor.spread.sheets.length
+    })
+
+    return rtnLen
+  }
+
+  /**
+   * 获取指定sheet tab的信息, 如:
+   * {i: 0, x(相对于canvas的x坐标): 82, w(tab宽度): 93, tw(文字宽度): 56, t(表名): "工作表129", …}
+   * 
+   * @param {*} index 
+   */
+  async apiGetSheetTabInfo(index) {
+    const browser = await this.driver.browser
+    const tabInfo = await browser.execute((idx) => {
+      return sheetApi.editor.spread.gcSpread._tab._tabs[idx]
+    }, index)
+
+    return tabInfo
+  }
+
+  /**
+   * 冻结行或列
+   * 
+   * @param {*} pos 要冻结的类型,如:
+   *  { row: 3, col: 4 }
+   */
+  async apiFreezeRowOrCol(pos) {
+    const browser = await this.driver.browser
+    await browser.execute((p) => {
+      sheetApi.freezeRowOrCol(p)
+    }, pos)
+  }
+
+  /**
+   * api取消冻结
+   */
+  async apiCancelFreeze() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      sheetApi.cancelFreeze()
+    })
+  }
+
+  /**
+   * 获取选择区域内的条件格式
+   * 
+   * @returns 条件格式数组
+   * {
+   *  selections: Array(1), ruleType: "equalsTo", value: "1", background: "#e88080", guid: "FZ9bKTn1h1vzK2f0"
+   * }
+   */
+  async apiGetCondiFormat() {
+    const browser = await this.driver.browser
+    await browser.execute(() => {
+      return sheetApi.getConditionalFormat()
+    })
+  }
+
+  /**
+   * 给选中区域设置多个条件格式
+   * 
+   * @param {*} rules 条件
+   *  [
+        {
+          background: '#e88080',
+          ruleType: 'equalsTo',
+          sortIndex: 1,
+          value: 11,
+          selections: [{ row: 6, col: 7, rowCount: 1, colCount: 1 }],
+        },
+        {
+          background: '#e88080',
+          ruleType: 'equalsTo',
+          sortIndex: 1,
+          value: 11,
+          selections: [{ row: 6, col: 7, rowCount: 1, colCount: 1 }],
+        },
+      ]
+   * 
+   */
+  async apiSetCondiFormat(rules) {
+    const browser = await this.driver.browser
+    await browser.execute((r) => {
+      return sheetApi.setConditionalFormat(r)
+    }, rules)
+  }
+
+  /**
+   * 删除选中区域的所有条件格式
+   * 
+   * @param {*} guids 条件的guids数组
+   */
+  async apiDeleteCondiFormat(guids) {
+    const browser = await this.driver.browser
+    await browser.execute((gs) => {
+      let removedRules = {}
+      gs.forEach((g) => {
+        removedRules['condition-format-' + g] = null
+      })
+
+      const sheet = sheetApi.editor.srpead.getActiveSheet()
+      sheet.actions.applyConditionalFormat(sheet.gcSheet, removedRules)
+
+    }, guids)
+  }
+
+  /**
+   * 删除选中区域指定索引的条件格式
+   * 
+   * @param {*} index 
+   */
+  async apiDeleteCondiFormatByIndex(index) {
+    const browser = await this.driver.browser
+    await browser.execute((idx) => {
+      sheetApi.deleteConditionalFormatByIndex(idx)
+    }, index)
+  }
+
+  /**
+   * 获取cell的评论
+   * 
+   * @param {*} pos 位置对象,如{ row: 1; col: 2 } 
+   * 
+   * @returns comment数组
+   */
+  async apiGetComment(pos) {
+    const browser = await this.driver.browser
+    await browser.execute((p) => {
+      sheetApi.getComment(p)
+    }, pos)
+  }
+
+  /**
+   * 获取sheet的当前顺序
+   * @param {*} index 
+   */
+  async apiGetSheetTabOrder(index) {
+    const browser = await this.driver.browser
+    const tabOrder = await browser.execute((idx) => {
+      return sheetApi.editor.spread.sheets[idx].order
+    }, index)
+
+    return tabOrder
+  }
+
+  /**
+   * 行是否可见
+   * 
+   * @param {*} row 
+   */
+  async apiIsRowVisible(row) {
+    const browser = await this.driver.browser
+    const vis = await browser.execute((idx) => {
+      return sheetApi.getActiveSheet().getRowVisible(idx)
+    }, row)
+
+    return vis
+  }
+
+  /**
+   * 列是否可见
+   * @param {*} col 
+   */
+  async apiIsColVisible(col) {
+    const browser = await this.driver.browser
+    const vis = await browser.execute((idx) => {
+      return sheetApi.getActiveSheet().getColumnVisible(idx)
+    }, col)
+
+    return vis
+  }
+
+  /**
+   * 数据验证单元格是否显示箭头
+   * 
+   * @param {*} row 
+   * @param {*} col 
+   */
+  async apiHasValiArrow(row, col) {
+    const browser = await this.driver.browser
+    const vis = await browser.execute((r, c) => {
+      return sheetApi.getActiveSheet().getDataValidator(r, c).inCellDropdown()
+    }, row, col)
+
+    return vis
+  }
+
+  /**
+   * 获取备选的列的索引
+   */
+  async apiGetSelectedColIndex() {
+    const browser = await this.driver.browser
+    const rtnIdx = await browser.execute(() => {
+      return sheetApi.getActiveSheet().getActiveColumnIndex()
+    })
+
+    return rtnIdx
+  }
+
+  /**
+   * 获取备选的行的索引
+   */
+  async apiGetSelectedRowIndex() {
+    const browser = await this.driver.browser
+    const rtnIdx = await browser.execute(() => {
+      return sheetApi.getActiveSheet().getActiveRowIndex()
+    })
+
+    return rtnIdx
+  }
+
+  /**
+   * 单元格输入内容
+   * 
+   * @param {*} content 
+   */
+  async apiEditCell(content) {
+    const browser = await this.driver.browser
+    const rtnIdx = await browser.execute(() => {
+      return sheetApi.editCell(content)
+    })
+
+    return rtnIdx
   }
 
   /**
