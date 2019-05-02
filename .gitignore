@@ -4,4 +4,4 @@ lib
 .vscode
 output
 src/debug
-package-lock.json
+/package-lock.json
