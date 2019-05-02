@@ -22,9 +22,6 @@ class WdHelper extends Helper {
 
   }
 
-  _beforeSuite() {
-  }
-
   _afterSuite() {
   }
 
@@ -940,6 +937,16 @@ class WdHelper extends Helper {
         break;
     }
     return rtn;
+  }
+
+  /**
+   * 生成区间的随机数
+   * 
+   * @param {*} max 
+   * @param {*} min 
+   */
+  genRandom(min, max){
+    return (Math.random() * (max - min + 1) | 0) + min
   }
 
 }

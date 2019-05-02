@@ -15,10 +15,10 @@ Before((I, officalPages) => {
 });
 
 
-Scenario('1',  (I,  sheetPages) => {
+Scenario('1', async (I,  sheetPages) => {
   
   I.amOnPage('https://shimo.im/sheet/WlQHGfFxpgEQGxn5/X9jjY?test=true')
-  sheetPages.sheetPage.waitForPageToLoad()
+  await sheetPages.sheetPage.waitForPageToLoad()
 
 })  
 

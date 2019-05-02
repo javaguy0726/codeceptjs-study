@@ -397,6 +397,10 @@ module.exports = {
     I.waitForVisible(this.toolbar.switchBtnClose)
   },
 
+  async renameAndCpFirstSheet(){
+    const randName = I.genRandom(100000,500000)
+
+  }
 
   /**
    * 鼠标移动到屏幕的左上角
