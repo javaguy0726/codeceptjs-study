@@ -368,6 +368,17 @@ module.exports = {
   },
 
   /**
+   * 处理[正在保存...]
+   * 
+   * @param {*} sec 秒
+   */
+  async handleSavingStatus(sec){
+    if(await I.waitDisplayed(this.header.saving,sec)){
+      I.waitForInvisible(this.header.saving)
+    }
+  },
+
+  /**
    * 重新进入本页
    */
   async enter() {
@@ -397,10 +408,41 @@ module.exports = {
     I.waitForVisible(this.toolbar.switchBtnClose)
   },
 
-  async renameAndCpFirstSheet(){
+  /**
+   * 重命名sheet并copy
+   * 
+   */
+  async renameAndCopyFirstSheet(){
     const randName = I.genRandom(100000,500000)
+    await I.apiRenameSheet(0, randName)
+    await I.apiCopySheet(0)
+    handleSavingStatus(3)
+    this.enter()
+  },
 
-  }
+
+  /**
+   * 选择单元格
+   * 
+   * @param {*} row 行
+   * @param {*} col 列
+   * @param {*} rowCount 行数 
+   * @param {*} colCount  列数
+   */
+  async setSelection(row, col, rowCount, colCount){
+    const start = coorCellCenter(row, col)
+    const end = coorCellCenter(row+rowCount-1, col+colCount-1)
+    
+    await I.touchAction(
+      [
+        {action: 'press', x: start.x, y: start.y},
+        {action: 'moveTo', x: - start.x, y: - start.y},
+        {action: 'moveTo', x: end.x, y: - end.y},
+        {action: 'release'},
+      ]
+    )
+
+  },
 
   /**
    * 鼠标移动到屏幕的左上角

@@ -44,7 +44,7 @@ class WdHelper extends Helper {
    * 等待指定时间,元素是否显示
    * 
    * @param {*} locator 元素定位,可以是对象和字符串
-   * @param {*} sec 
+   * @param {*} sec 秒
    * 
    * @returns true=显示 false=不显示
    */
