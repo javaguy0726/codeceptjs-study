@@ -806,8 +806,8 @@ class WdHelper extends Helper {
    */
   async apiDeleteComment(row, col, index) {
     const browser = await this.driver.browser
-    await browser.execute((r,c,idx) => {
-      const cmmt = sheetApi.getComment({r, c})
+    await browser.execute((r, c, idx) => {
+      const cmmt = sheetApi.getComment({ r, c })
       sheetApi.deleteComment(cmmt[idx]['comment_guid'])
     }, row, col, index)
 
@@ -821,8 +821,8 @@ class WdHelper extends Helper {
    */
   async apiCloseComment(row, col) {
     const browser = await this.driver.browser
-    await browser.execute((r,c) => {
-      const cmmt = sheetApi.closeComment({r, c})
+    await browser.execute((r, c) => {
+      const cmmt = sheetApi.closeComment({ r, c })
     }, row, col)
 
   }
@@ -861,7 +861,8 @@ class WdHelper extends Helper {
    * @param {*} col 
    */
   async apiIsColVisible(col) {
-    const browser = await this.driver.browser
+    const browser = await this.driv
+    er.browser
     const vis = await browser.execute((idx) => {
       return sheetApi.getActiveSheet().getColumnVisible(idx)
     }, col)
@@ -945,7 +946,7 @@ class WdHelper extends Helper {
    * @param {*} max 
    * @param {*} min 
    */
-  genRandom(min, max){
+  genRandom(min, max) {
     return (Math.random() * (max - min + 1) | 0) + min
   }
 

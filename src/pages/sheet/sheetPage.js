@@ -372,8 +372,8 @@ module.exports = {
    * 
    * @param {*} sec 秒
    */
-  async handleSavingStatus(sec){
-    if(await I.waitDisplayed(this.header.saving,sec)){
+  async handleSavingStatus(sec) {
+    if (await I.waitDisplayed(this.header.saving, sec)) {
       I.waitForInvisible(this.header.saving)
     }
   },
@@ -412,8 +412,8 @@ module.exports = {
    * 重命名sheet并copy
    * 
    */
-  async renameAndCopyFirstSheet(){
-    const randName = I.genRandom(100000,500000)
+  async renameAndCopyFirstSheet() {
+    const randName = I.genRandom(100000, 500000)
     await I.apiRenameSheet(0, randName)
     await I.apiCopySheet(0)
     handleSavingStatus(3)
@@ -429,29 +429,62 @@ module.exports = {
    * @param {*} rowCount 行数 
    * @param {*} colCount  列数
    */
-  async setSelection(row, col, rowCount, colCount){
+  async setSelection(row, col, rowCount, colCount) {
     const start = coorCellCenter(row, col)
-    const end = coorCellCenter(row+rowCount-1, col+colCount-1)
-    
+    const end = coorCellCenter(row + rowCount - 1, col + colCount - 1)
+
     await I.touchAction(
       [
-        {action: 'press', x: start.x, y: start.y},
-        {action: 'moveTo', x: - start.x, y: - start.y},
-        {action: 'moveTo', x: end.x, y: - end.y},
-        {action: 'release'},
+        { action: 'press', x: start.x, y: start.y },
+        { action: 'moveTo', x: - start.x, y: - start.y },
+        { action: 'moveTo', x: end.x, y: end.y },
+        { action: 'release' },
+        { action: 'moveTo', x: - end.x, y: - end.y },
       ]
     )
 
   },
 
   /**
+   * 单元格输入内容
+   * 
+   * @param {*} row  行 
+   * @param {*} col  列
+   * @param {*} content  内容字符串
+   * @param {*} activate  是否激活单元格后输入
+   */
+  async editCell(row, col, content, activate) {
+    const cell = coorCellCenter(row, col)
+
+    await I.touchAction(
+      [
+        { action: 'press', x: cell.x, y: cell.y },
+      ]
+    )
+
+    if (activate === true) {
+      I.pressKey('Enter')
+    }
+
+    I.pressKey([...content])
+
+    await I.touchAction(
+      [
+        { action: 'move', x: - cell.x, y: - cell.y },
+      ]
+    )
+
+  },
+
+
+  /**
    * 鼠标移动到屏幕的左上角
    */
-  async mouseToStart(){
+  async mouseToStart() {
     I.moveCursorTo(this.root)
-    const rootSize = await I.elementGetSize(this.root) 
+    const rootSize = await I.elementGetSize(this.root)
     await I.touchAction({
-     action: 'moveTo', x: - rootSize.width/2, y: - rootSize.height/2
+      action: 'moveTo', x: - rootSize.width / 2, y: - rootSize.height / 2
     })
   },
 
@@ -578,8 +611,8 @@ module.exports = {
    * @param {*} row 
    */
   async coorRowHeadMiddle(row) {
-    const { x: cellX, y: cellY,  height: cellHeight } = await I.apiGetCellRect(row, 0)
-    const {  y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+    const { x: cellX, y: cellY, height: cellHeight } = await I.apiGetCellRect(row, 0)
+    const { y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
     return {
       x: cellX / 2,
@@ -594,8 +627,8 @@ module.exports = {
    * @param {*} row 
    */
   async coorRowHeadBottom(row) {
-    const { x: cellX, y: cellY,  height: cellHeight } = await I.apiGetCellRect(row, 0)
-    const {  y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+    const { x: cellX, y: cellY, height: cellHeight } = await I.apiGetCellRect(row, 0)
+    const { y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
     return {
       x: cellX / 2,
@@ -610,12 +643,12 @@ module.exports = {
    * @param {*} col 
    */
   async coorColHeadCenter(col) {
-    const { x: cellX, y: cellY, width: cellWidth} = await I.apiGetCellRect(0, col)
+    const { x: cellX, y: cellY, width: cellWidth } = await I.apiGetCellRect(0, col)
     const { y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
     return {
-      x: cellX+cellWidth/2,
-      y: canvasY+cellY/2
+      x: cellX + cellWidth / 2,
+      y: canvasY + cellY / 2
     }
 
   },
@@ -627,12 +660,12 @@ module.exports = {
    * @param {*} col 
    */
   async coorColHeadRight(col) {
-    const { x: cellX, y: cellY, width: cellWidth} = await I.apiGetCellRect(0, col)
-    const {  y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
+    const { x: cellX, y: cellY, width: cellWidth } = await I.apiGetCellRect(0, col)
+    const { y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
     return {
-      x: cellX+cellWidth,
-      y: canvasY+cellY/2
+      x: cellX + cellWidth,
+      y: canvasY + cellY / 2
     }
 
   },
@@ -645,8 +678,8 @@ module.exports = {
     const { x: canvasX, y: canvasY } = await I.elementGetLocation(this.sheet.canvas)
 
     return {
-      x: cellX/2+canvasX,
-      y: cellY/2+canvasY
+      x: cellX / 2 + canvasX,
+      y: cellY / 2 + canvasY
     }
 
   },
