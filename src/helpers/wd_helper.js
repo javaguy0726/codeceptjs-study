@@ -89,6 +89,7 @@ class WdHelper extends Helper {
     const ele = await browser.$(parseLocator(locator))
     return ele.getSize()
   }
+  
   /**
    * 元素是否显示
    * 
@@ -132,7 +133,7 @@ class WdHelper extends Helper {
   async apiGetCellRect(row, col) {
     const browser = await this.driver.browser
     const rect = await browser.execute((r, c) => {
-      sheetApi.getActiveSheet().getCellRect(r, c)
+      return sheetApi.getActiveSheet().getCellRect(r, c)
     }, row, col)
 
     return rect
@@ -144,7 +145,7 @@ class WdHelper extends Helper {
   async apiGetColumnCount() {
     const browser = await this.driver.browser
     const colCounts = await browser.execute(() => {
-      sheetApi.getActiveSheet().getColumnCount()
+      return sheetApi.getActiveSheet().getColumnCount()
     })
 
     return colCounts
@@ -156,7 +157,7 @@ class WdHelper extends Helper {
   async apiGetRowCount() {
     const browser = await this.driver.browser
     const rowCounts = await browser.execute(() => {
-      sheetApi.getActiveSheet().getRowCount()
+      return sheetApi.getActiveSheet().getRowCount()
     })
 
     return rowCounts
@@ -170,7 +171,7 @@ class WdHelper extends Helper {
   async apiGetRowHeight(row) {
     const browser = await this.driver.browser
     const rHeight = await browser.execute((r) => {
-      sheetApi.getActiveSheet().getRowHeight(r)
+      return sheetApi.getActiveSheet().getRowHeight(r)
     }, row)
 
     return rHeight
@@ -184,7 +185,7 @@ class WdHelper extends Helper {
   async apiGetRowHeight(col) {
     const browser = await this.driver.browser
     const cWidth = await browser.execute((c) => {
-      sheetApi.getActiveSheet().getColumnWidth(c)
+      return sheetApi.getActiveSheet().getColumnWidth(c)
     }, col)
 
     return cWidth
@@ -209,7 +210,7 @@ class WdHelper extends Helper {
     const browser = await this.driver.browser
     const curSheet = await browser.execute(() => {
       sheetApi.addSheet()
-      sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
+      return  sheetApi.editor.spread.gcSpread.getActiveSheetIndex()
     })
 
     return curSheet

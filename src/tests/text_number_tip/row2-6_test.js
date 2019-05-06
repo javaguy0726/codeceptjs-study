@@ -19,6 +19,7 @@ Scenario('1', async (I, sheetPages) => {
 
   I.amOnPage('https://shimo.im/sheet/WlQHGfFxpgEQGxn5/X9jjY?test=true')
   await sheetPages.sheetPage.waitForPageToLoad()
+  await sheetPages.sheetPage.editCell(3,3,'123456', false)
 
 })
 

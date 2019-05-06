@@ -430,8 +430,8 @@ module.exports = {
    * @param {*} colCount  列数
    */
   async setSelection(row, col, rowCount, colCount) {
-    const start = coorCellCenter(row, col)
-    const end = coorCellCenter(row + rowCount - 1, col + colCount - 1)
+    const start = this.coorCellCenter(row, col)
+    const end = this.coorCellCenter(row + rowCount - 1, col + colCount - 1)
 
     await I.touchAction(
       [
@@ -451,10 +451,42 @@ module.exports = {
    * @param {*} row  行 
    * @param {*} col  列
    * @param {*} content  内容字符串
-   * @param {*} activate  是否激活单元格后输入
+   * @param {*} actived  是否激活单元格后输入
    */
-  async editCell(row, col, content, activate) {
-    const cell = coorCellCenter(row, col)
+  async editCell(row, col, content, actived) {
+    const cell = await this.coorCellCenter(row, col)
+
+    await console.log(cell)
+    await I.touchAction(
+      [
+        { action: 'press', x: cell.x, y: cell.y },
+      ]
+    )
+
+    if (actived === true) {
+      I.pressKey('Enter')
+    }
+
+    I.pressKey([...content])
+
+    await I.touchAction(
+      [
+        { action: 'move', x: - cell.x, y: - cell.y },
+      ]
+    )
+
+  },
+  
+  /**
+   * 删除单元格或内容
+   * 
+   * @param {*} row  行 
+   * @param {*} col   列
+   * @param {*} actived  是否激活单元格
+   * 
+   */
+  async delCell(row, col, actived){
+    const cell = this.coorCellCenter(row, col)
 
     await I.touchAction(
       [
@@ -462,11 +494,14 @@ module.exports = {
       ]
     )
 
-    if (activate === true) {
+    if (actived === true) {
       I.pressKey('Enter')
+      I.pressKey(['Control','a'])
+      I.pressKey('Backspace')
+      
+    }else{
+      I.pressKey('Del')
     }
-
-    I.pressKey([...content])
 
     await I.touchAction(
       [
