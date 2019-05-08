@@ -66,16 +66,30 @@ class WdHelper extends Helper {
   /**
    * 执行action操作
    * 
-   * @param {*} act 要执行的操作,EX:
+   * @param {*} action 要执行的操作,EX:
    * [
         { action: 'press', x: 200, y: 200 },
         { action: 'moveTo', x: 200, y: 300 },
         'release'
     ]
    */
-  async touchAction(act) {
+  async performActions() {
     const browser = await this.driver.browser
-    await browser.touchAction(act)
+    await browser.performActions(
+      {
+        actions:[
+          {
+            "type": "key",
+            "id": "keyboard",
+            "actions": [
+              {"type": "keyDown", "value": "s"},
+              {"type": "keyUp", "value": "s"}
+            ]
+          }
+
+        ]
+      }
+    )
   }
 
   /**

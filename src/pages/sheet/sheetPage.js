@@ -456,14 +456,7 @@ module.exports = {
   async editCell(row, col, content, actived) {
     const cell = await this.coorCellCenter(row, col)
 
-    await I.touchAction(
-      {
-        action: 'press',
-        x: cell.x,
-        y: cell.y
-      }
-
-    )
+    await I.performActions()
 
     if (actived === true) {
       I.pressKey('Enter')
