@@ -53,7 +53,7 @@ class WdHelper extends Helper {
     let rtn = true
     try {
       await browser.waitUntil(async () => {
-        const ele = await browser.$(parseLocator(locator))
+        const ele = await browser.$(this.parseLocator(locator))
         return ele.isDisplayed()
       }, sec * 1000, '等待超时,元素没有显示');
     } catch (err) {
@@ -66,16 +66,16 @@ class WdHelper extends Helper {
   /**
    * 执行action操作
    * 
-   * @param {*} action 要执行的操作,EX:
+   * @param {*} act 要执行的操作,EX:
    * [
         { action: 'press', x: 200, y: 200 },
         { action: 'moveTo', x: 200, y: 300 },
         'release'
     ]
    */
-  async touchAction(action) {
+  async touchAction(act) {
     const browser = await this.driver.browser
-    await browser.touchAction(action)
+    await browser.touchAction(act)
   }
 
   /**
@@ -86,7 +86,7 @@ class WdHelper extends Helper {
    */
   async elementGetSize(locator) {
     const browser = await this.driver.browser
-    const ele = await browser.$(parseLocator(locator))
+    const ele = await browser.$(this.parseLocator(locator))
     return ele.getSize()
   }
   
@@ -99,7 +99,7 @@ class WdHelper extends Helper {
     const browser = await this.driver.browser
     let rtn = true
     try {
-      const ele = await browser.$(parseLocator(locator))
+      const ele = await browser.$(this.parseLocator(locator))
       rtn = ele.isDisplayed()
     } catch (err) {
       rtn = false
@@ -116,7 +116,7 @@ class WdHelper extends Helper {
    */
   async elementGetLocation(locator) {
     const browser = await this.driver.browser
-    const ele = await browser.$(parseLocator(locator))
+    const ele = await browser.$(this.parseLocator(locator))
     const location = ele.getLocation()
 
     return location

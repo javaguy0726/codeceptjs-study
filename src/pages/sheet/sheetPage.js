@@ -456,11 +456,13 @@ module.exports = {
   async editCell(row, col, content, actived) {
     const cell = await this.coorCellCenter(row, col)
 
-    await console.log(cell)
     await I.touchAction(
-      [
-        { action: 'press', x: cell.x, y: cell.y },
-      ]
+      {
+        action: 'press',
+        x: cell.x,
+        y: cell.y
+      }
+
     )
 
     if (actived === true) {
@@ -476,7 +478,7 @@ module.exports = {
     )
 
   },
-  
+
   /**
    * 删除单元格或内容
    * 
@@ -485,7 +487,7 @@ module.exports = {
    * @param {*} actived  是否激活单元格
    * 
    */
-  async delCell(row, col, actived){
+  async delCell(row, col, actived) {
     const cell = this.coorCellCenter(row, col)
 
     await I.touchAction(
@@ -496,10 +498,10 @@ module.exports = {
 
     if (actived === true) {
       I.pressKey('Enter')
-      I.pressKey(['Control','a'])
+      I.pressKey(['Control', 'a'])
       I.pressKey('Backspace')
-      
-    }else{
+
+    } else {
       I.pressKey('Del')
     }
 
